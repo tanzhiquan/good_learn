@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce Demo',
       home: LoginPage(),
+      debugShowCheckedModeBanner: false, // 添加这一行来隐藏debug标签
     );
   }
 }

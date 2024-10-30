@@ -7,6 +7,8 @@ class LoginPage extends StatelessWidget {
 
   void _login(BuildContext context) {
     // 登录逻辑 需要补充密码校验
+    print('username: ${usernameController.text}');
+    print('password: ${passwordController.text}');
     if (true) {
       Navigator.push(
         context,
