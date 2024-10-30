@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'app Demo',
-      home: LoginPage(),
+      home: AuthPage(),
       debugShowCheckedModeBanner: false, // 添加这一行来隐藏debug标签
     );
   }

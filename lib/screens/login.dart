@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'goodlist.dart';
 
-class LoginPage extends StatelessWidget {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class AuthPage extends StatelessWidget {
+  final TextEditingController ctrlUsername = TextEditingController();
+  final TextEditingController ctrlPassword = TextEditingController();
 
-  void _login(BuildContext context) {
-    // 登录逻辑 需要补充密码校验
-    var username = "admin";
-    var password = "123456";
-    // 初始化账号密码
-    if (usernameController.text == username && passwordController.text == password) {
+  void _loginUser(BuildContext context) {
+    const String validUser = "";
+    const String validPass = "";
+    if (ctrlUsername.text == validUser && ctrlPassword.text == validPass) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProductListPage()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid username or password')),
+        const SnackBar(content: Text('用户名或密码不正确')),
       );
     }
   }
@@ -25,92 +23,38 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('登录'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: const Text('登录界面'), backgroundColor: Colors.blue, elevation: 10.0),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/bg.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  child: TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      labelText: '请输入用户名',
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                  flex: 1,
+                TextField(
+                  controller: ctrlUsername,
+                  decoration: InputDecoration(labelText: '输入用户名',
+                  // 修改输入框长度为屏幕1/3宽度
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
                 ),
-                Flexible(
-                  child: TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: '请输入密码',
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.grey),
-                      ),
-                    ),
-                    obscureText: true,
-                  ),
-                  flex: 1,
+                const SizedBox(height: 10),
+                TextField(
+                  controller: ctrlPassword,
+                  decoration: InputDecoration(labelText: '输入密码', border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+                  obscureText: true,
                 ),
-                const SizedBox(height: 20),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () => _login(context),
-                        child: const Text('登录'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
-                        ),
-                        child: const Text('注册'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  flex: 2,
+                const SizedBox(height: 25),
+                ElevatedButton(
+                  onPressed: () => _loginUser(context),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                  child: const Text('登录', style: TextStyle(color: Colors.white)),
                 ),
-                const SizedBox(height: 20),
-                Flexible(
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('忘记密码？'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.blue,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-                  flex: 1,
+                ElevatedButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage())),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                  child: const Text('注册', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
@@ -121,14 +65,12 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class RegisterPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('注册')),
-      body: const Center(
-        child: Text('注册页面'),
-      ),
+      appBar: AppBar(title: const Text('注册'), backgroundColor: Colors.blue, elevation: 10.0),
+      body: Center(child: Text('注册页面', style: TextStyle(color: Colors.black),)),
     );
   }
 }

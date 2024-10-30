@@ -39,15 +39,29 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       style: const TextStyle(color: Colors.red, fontSize: 20)),
                   SizedBox(height: 16),
                   Text('商品描述',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Text(
                       '这是一个高品质的${widget.product['name']}，采用优质材料制作，舒适耐穿。适合各种场合穿着，是您的理想选择。'),
                   SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => _showSelectionBottomSheet(context),
-                    child: const Text('选择颜色和尺寸'),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => _showSelectionBottomSheet(context),
+                            child: const Text('选择颜色和尺寸'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -61,6 +75,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   void _showSelectionBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.9
+      ),
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
@@ -71,8 +88,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('选择颜色',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -90,8 +107,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   SizedBox(height: 16),
                   Text('选择尺寸',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
