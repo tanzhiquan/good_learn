@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:helloworld/screens/login.dart';
+import 'package:hotapp/screens/auth_screen.dart';
 
-void main() => runApp(MyApp());
+// Main function to run the ECommerceApp widget
+void main() => runApp(ECommerceApp());
 
-class MyApp extends StatelessWidget {
+// Main application widget
+class ECommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // Title of the application
       title: 'E-commerce Demo',
-      home: LoginPage(),
-      debugShowCheckedModeBanner: false, // 添加这一行来隐藏debug标签
+      // Home screen of the application
+      home: AuthScreen(), 
+      // Hide the debug banner in release mode
+      debugShowCheckedModeBanner: false,
     );
   }
 }
+
