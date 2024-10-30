@@ -17,3 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 - How to use FlutLab? Please, view our https://flutlab.io/docs
 - Join the discussion and conversation on https://flutlab.io/residents
+
+## Run Flutter Web Server
+flutter run -d web-server --web-port 5555 -t lib/main.dart 
+shift + command + p  -> Run Browser preview on port 5555
