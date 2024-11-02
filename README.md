@@ -21,3 +21,5 @@ samples, guidance on mobile development, and a full API reference.
 ## Run Flutter Web Server
 flutter run -d web-server --web-port 5555 -t lib/main.dart 
 shift + command + p  -> Run Browser preview on port 5555
+
+flutter run -d web-server --web-port 5555 --web-hostname 0.0.0.0 --hot -t lib/main.dart

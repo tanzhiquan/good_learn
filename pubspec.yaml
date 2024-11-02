@@ -19,6 +19,13 @@ flutter:
   uses-material-design: true
   assets:
    - assets/
+  #  - assets/main2/
+  #  - assets/main3/
+  #  - assets/main4/
+  #  - assets/main5/
+  #  - assets/main6/
+  #  - assets/main7/
+  #  - assets/main8/
   # fonts:
   #   - family: Schyler
   #     fonts:
