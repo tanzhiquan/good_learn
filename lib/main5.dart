@@ -16,14 +16,14 @@ class ClassicalApp extends StatelessWidget {
   }
 }
 
-// 古典风格登录页面
+// 登录页面
 class ClassicalLogin extends StatelessWidget {
   final TextEditingController userController = TextEditingController();
   final TextEditingController passController = TextEditingController();
 
   void authenticateUser(BuildContext context) {
-    String expectedUser = "admin";
-    String expectedPass = "123456";
+    String expectedUser = "";
+    String expectedPass = "";
     if (userController.text == expectedUser && passController.text == expectedPass) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => ClassicalProductList()));
     } else {
@@ -130,7 +130,6 @@ class ClassicalLogin extends StatelessWidget {
 }
 
 // 产品列表页面
-
 class ClassicalProductList extends StatefulWidget {
   @override
   _CardStyleProductListState createState() => _CardStyleProductListState();
@@ -138,10 +137,10 @@ class ClassicalProductList extends StatefulWidget {
 
 class _CardStyleProductListState extends State<ClassicalProductList> {
   final List<Map<String, String>> productItems = [
-    {'productName': '智能手环', 'priceTag': '¥179', 'imageUrl': 'assets/band.jpg'},
-    {'productName': '无线音箱', 'priceTag': '¥299', 'imageUrl': 'assets/speaker.jpg'},
-    {'productName': '笔记本电脑', 'priceTag': '¥3599', 'imageUrl': 'assets/laptop.jpg'},
-    {'productName': '空气净化器', 'priceTag': '¥799', 'imageUrl': 'assets/air_purifier.jpg'},
+    {'productName': '智能手环', 'priceTag': '¥179', 'image': 'main5/apple.jpg','detail':"需要补充详情"},
+    {'productName': '无线音箱', 'priceTag': '¥299', 'image': 'main5/apple.jpg','detail':"需要补充详情"},
+    {'productName': '笔记本电脑', 'priceTag': '¥3599', 'image': 'main5/phone.jpg','detail':"需要补充详情"},
+    {'productName': '空气净化器', 'priceTag': '¥799', 'image': 'main5/phone.jpg','detail':"需要补充详情"},
   ];
 
   List<Map<String, String>> currentDisplayProducts = [];
@@ -211,7 +210,7 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                             child: Image.asset(
-                              currentDisplayProducts[index]['imageUrl']!,
+                              currentDisplayProducts[index]['image']!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -240,15 +239,179 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
   }
 }
 
-class CardStyleProductDetail extends StatelessWidget {
+// class CardStyleProductDetail extends StatelessWidget {
+//   final Map<String, String> item;
+//   CardStyleProductDetail({required this.item});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text(item['productName']!)),
+//       body: Center(child: Text('${item['productName']}的详细介绍')),
+//     );
+//   }
+// }
+
+
+class CardStyleProductDetail extends StatefulWidget {
   final Map<String, String> item;
   CardStyleProductDetail({required this.item});
 
   @override
+  _CardStyleProductDetailState createState() => _CardStyleProductDetailState();
+}
+
+class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
+  String? selectedSize;
+  String? selectedColor;
+  final List<String> sizes = ['S', 'M', 'L'];
+  final List<String> colors = ['红色', '蓝色', '黑色'];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(item['productName']!)),
-      body: Center(child: Text('${item['productName']}的详细介绍')),
+      appBar: AppBar(
+        title: Text(widget.item['productName']!),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(widget.item['image']!, fit: BoxFit.cover, width: double.infinity, height: 300),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.item['productName']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  Text(widget.item['priceTag']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
+                  SizedBox(height: 16),
+                  Text('商品描述', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  Text(widget.item['detail']!),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => _showOptionsBottomSheet(context),
+                          child: Text('加入购物车'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[800]),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => _showOptionsBottomSheet(context),
+                          child: Text('立即购买'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showOptionsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('选择规格', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  Text('尺寸', style: TextStyle(fontSize: 16)),
+                  Wrap(
+                    spacing: 8,
+                    children: sizes.map((size) {
+                      return ChoiceChip(
+                        label: Text(size),
+                        selectedColor: Colors.blueAccent,
+                        selected: selectedSize == size,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            selectedSize = selected ? size : null;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 16),
+                  Text('颜色', style: TextStyle(fontSize: 16)),
+                  Wrap(
+                    spacing: 8,
+                    children: colors.map((color) {
+                      return ChoiceChip(
+                        label: Text(color),
+                        selectedColor: Colors.blueAccent,
+                        selected: selectedColor == color,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            selectedColor = selected ? color : null;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: (selectedSize != null && selectedColor != null)
+                              ? () => _addToCart(context)
+                              : null,
+                          child: Text('加入购物车'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[800]),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: (selectedSize != null && selectedColor != null)
+                              ? () => _buyNow(context)
+                              : null,
+                          child: Text('立即购买'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _addToCart(BuildContext context) {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('已将 ${widget.item['productName']} ($selectedSize, $selectedColor) 加入购物车')),
+    );
+  }
+
+  void _buyNow(BuildContext context) {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('立即购买 ${widget.item['productName']} ($selectedSize, $selectedColor)')),
     );
   }
 }

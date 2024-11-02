@@ -121,6 +121,7 @@ class Products extends StatefulWidget {
   _SimpleProductListState createState() => _SimpleProductListState();
 }
 class _SimpleProductListState extends State<Products> {
+  // 需要商品照片
   final List<Map<String, String>> productCatalog = [
     {'title': '智能手表', 'price': '¥299', 'image': 'assets/apple.jpg'},
     {'title': '数码相机', 'price': '¥899', 'image': 'assets/camera.jpg'},
@@ -241,7 +242,7 @@ class SimpleProductDetail extends StatefulWidget {
 
 class _SimpleProductDetailState extends State<SimpleProductDetail> {
   String? selectedSpec;
-  final List<String> specs = ['32GB', '64GB', '128GB'];
+  final List<String> specs = ['新款', '旧款', '优惠款'];
 
   final List<String> colors = ['红色', '蓝色', '黑色', '白色'];
   final List<String> sizes = ['S', 'M', 'L', 'XL'];

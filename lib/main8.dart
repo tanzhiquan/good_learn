@@ -181,10 +181,10 @@ class ProList extends StatefulWidget {
 
 class _ProListState extends State<ProList> {
   final List<Map<String, String>> inventory = [
-    {'product': '时尚背包', 'cost': '¥199', 'oldcost': '¥299','img': 'main8/apple.jpg'},
-    {'product': '便携音响', 'cost': '¥349', 'oldcost': '¥399','img': 'main8/phone.jpg'},
-    {'product': '运动鞋', 'cost': '¥799','oldcost': '¥499', 'img': 'main8/apple.jpg'},
-    {'product': '手提电脑', 'cost': '¥4299','oldcost': '¥399', 'img': 'main8/phone.jpg'},
+    {'product': '时尚背包', 'cost': '¥199', 'oldcost': '¥299','img': 'main8/apple.jpg','desc':'商品描述信息'},
+    {'product': '便携音响', 'cost': '¥349', 'oldcost': '¥399','img': 'main8/phone.jpg','desc':'商品描述信息'},
+    {'product': '运动鞋', 'cost': '¥799','oldcost': '¥499', 'img': 'main8/apple.jpg','desc':'商品描述信息'},
+    {'product': '手提电脑', 'cost': '¥4299','oldcost': '¥399', 'img': 'main8/phone.jpg','desc':'商品描述信息'},
   ];
 
   List<Map<String, String>> shownItems = [];
@@ -248,7 +248,7 @@ class _ProListState extends State<ProList> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            MinimalProductDetail(product: shownItems[index]),
+                            MinimalProductDetail(item: shownItems[index]),
                       ),
                     );
                   },
@@ -304,18 +304,169 @@ class _ProListState extends State<ProList> {
   }
 }
 
-class MinimalProductDetail extends StatelessWidget {
-  final Map<String, String> product;
-  MinimalProductDetail({required this.product});
+// class MinimalProductDetail extends StatelessWidget {
+//   final Map<String, String> product;
+//   MinimalProductDetail({required this.product});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(product['product']!),
+//         backgroundColor: Colors.grey.shade800,
+//       ),
+//       body: Center(child: Text('了解更多关于${product['product']}的信息')),
+//     );
+//   }
+// }
+
+class MinimalProductDetail extends StatefulWidget {
+  final Map<String, String> item;
+  MinimalProductDetail({required this.item});
+
+  @override
+  _CardStyleProductDetailState createState() => _CardStyleProductDetailState();
+}
+
+class _CardStyleProductDetailState extends State<MinimalProductDetail> {
+  String? selectedSize;
+  String? selectedColor;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(product['product']!),
-        backgroundColor: Colors.grey.shade800,
+      appBar: AppBar(title: Text(widget.item['product']!)),
+      body: Column(
+        children: [
+          Image.asset(widget.item['img']!, width: double.infinity, height: 300),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.item['product']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                Text(widget.item['cost']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
+                Text(widget.item['desc']!, style: TextStyle(fontSize: 16)),
+                SizedBox(height: 16),
+                _buildPurchaseButtons(),
+              ],
+            ),
+          ),
+        ],
       ),
-      body: Center(child: Text('了解更多关于${product['product']}的信息')),
     );
   }
+
+  Widget _buildPurchaseButtons() {
+    return Row(
+      children: [
+        Expanded(child: ElevatedButton(onPressed: () => _openOptionSelector(context), child: Text('加入购物车'))),
+        SizedBox(width: 8),
+        Expanded(child: ElevatedButton(onPressed: () => _openOptionSelector(context), child: Text('立即购买'))),
+      ],
+    );
+  }
+
+  void _openOptionSelector(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => _optionSelector(),
+    );
+  }
+
+  Widget _optionSelector() {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSizeOptions(setState),
+              SizedBox(height: 16),
+              _buildColorOptions(setState),
+              SizedBox(height: 16),
+              _buildFinalButtons(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSizeOptions(StateSetter setState) {
+    final sizes = ['S', 'M', 'L'];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('选择尺寸', style: TextStyle(fontSize: 18)),
+        Wrap(
+          spacing: 8,
+          children: sizes.map((size) {
+            return ChoiceChip(
+              label: Text(size),
+              selected: selectedSize == size,
+              onSelected: (selected) {
+                setState(() => selectedSize = selected ? size : null);
+              },
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildColorOptions(StateSetter setState) {
+    final colors = ['红色', '蓝色', '黑色'];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('选择颜色', style: TextStyle(fontSize: 18)),
+        Wrap(
+          spacing: 8,
+          children: colors.map((color) {
+            return ChoiceChip(
+              label: Text(color),
+              selected: selectedColor == color,
+              onSelected: (selected) {
+                setState(() => selectedColor = selected ? color : null);
+              },
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFinalButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: (selectedSize != null && selectedColor != null) ? _confirmAddToCart : null,
+            child: Text('加入购物车'),
+          ),
+        ),
+        SizedBox(width: 8),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: (selectedSize != null && selectedColor != null) ? _confirmBuyNow : null,
+            child: Text('立即购买'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _confirmAddToCart() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('已将商品加入购物车')));
+  }
+
+  void _confirmBuyNow() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('立即购买成功')));
+  }
 }
+

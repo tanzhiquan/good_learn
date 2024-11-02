@@ -21,8 +21,8 @@ class InkLogin extends StatelessWidget {
   final TextEditingController inkPass = TextEditingController();
 
   void handleLogin(BuildContext context) {
-    String correctUser = "admin";
-    String correctPass = "123456";
+    String correctUser = "";
+    String correctPass = "";
     if (inkUser.text == correctUser && inkPass.text == correctPass) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => InkProduct()));
     } else {
@@ -114,10 +114,10 @@ class InkProduct extends StatefulWidget {
 class _InkProductPageState extends State<InkProduct> {
  
   final List<Map<String, String>> catalogItems = [
-    {'name': '毛绒玩具', 'price': '¥89', 'imagePath': 'assets/toy.jpg'},
-    {'name': '拼图', 'price': '¥39', 'imagePath': 'assets/puzzle.jpg'},
-    {'name': '彩色积木', 'price': '¥59', 'imagePath': 'assets/blocks.jpg'},
-    {'name': '模型车', 'price': '¥129', 'imagePath': 'assets/car_model.jpg'},
+    {'name': '毛绒玩具', 'price': '¥89', 'image': 'main6/phone.jpg','detail':'补充商品描述'},
+    {'name': '拼图', 'price': '¥39', 'image': 'main6/apple.jpg','detail':'补充商品描述'},
+    {'name': '彩色积木', 'price': '¥59', 'image': 'main6/phone.jpg','detail':'补充商品描述'},
+    {'name': '模型车', 'price': '¥129', 'image': 'main6/apple.jpg','detail':'补充商品描述'},
   ];
 
   List<Map<String, String>> availableItems = [];
@@ -189,7 +189,7 @@ class _InkProductPageState extends State<InkProduct> {
                       children: [
                         CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage(availableItems[index]['imagePath']!),
+                          backgroundImage: AssetImage(availableItems[index]['image']!),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
@@ -215,18 +215,168 @@ class _InkProductPageState extends State<InkProduct> {
   }
 }
 
-class CartoonProductDetail extends StatelessWidget {
+// class CartoonProductDetail extends StatelessWidget {
+//   final Map<String, String> item;
+//   CartoonProductDetail({required this.item});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(item['name']!),
+//         backgroundColor: Colors.orange,
+//       ),
+//       body: Center(child: Text('这是${item['name']}的卡通风详情')),
+//     );
+//   }
+// }
+
+
+class CartoonProductDetail extends StatefulWidget {
   final Map<String, String> item;
   CartoonProductDetail({required this.item});
 
   @override
+  _CartoonProductDetailState createState() => _CartoonProductDetailState();
+}
+
+class _CartoonProductDetailState extends State<CartoonProductDetail> {
+  String? chosenSize;
+  String? chosenColor;
+  final List<String> sizes = ['S', 'M', 'L'];
+  final List<String> colors = ['红色', '蓝色', '黑色'];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(item['name']!),
-        backgroundColor: Colors.orange,
+      appBar: AppBar(title: Text(widget.item['name']!)),
+      body: Column(
+        children: [
+          Image.asset(widget.item['image']!, width: double.infinity, height: 300),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.item['name']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                Text(widget.item['price']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
+                // 商品详情，灰色，小号字体
+                Text(widget.item['detail']!, style: TextStyle(color: Colors.grey, fontSize: 12)),
+                // 下面的内容固定在屏幕底部
+                const Divider(),
+                _buildActionButtons(),
+              ],
+            ),
+          ),
+        ],
       ),
-      body: Center(child: Text('这是${item['name']}的卡通风详情')),
     );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      // 下面两个按钮，布局固定到屏幕到最底部
+      children: [
+        Expanded(child: ElevatedButton(onPressed: () => _showSpecificationSheet(context), child: Text('加入购物车'))),
+        SizedBox(width: 8),
+        Expanded(child: ElevatedButton(onPressed: () => _showSpecificationSheet(context), child: Text('立即购买'))),
+      ],
+    );
+  }
+
+  void _showSpecificationSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return _buildSpecificationOptions();
+      },
+    );
+  }
+
+  Widget _buildSpecificationOptions() {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSizeOptions(setState),
+              _buildColorOptions(setState),
+              _buildBottomActionButtons(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSizeOptions(StateSetter setState) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('选择尺寸', style: TextStyle(fontSize: 18)),
+        Wrap(
+          spacing: 8,
+          children: sizes.map((size) {
+            return ChoiceChip(
+              label: Text(size),
+              selectedColor: Colors.blueAccent,
+              selected: chosenSize == size,
+              onSelected: (bool selected) {
+                setState(() {
+                  chosenSize = selected ? size : null;
+                });
+              },
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildColorOptions(StateSetter setState) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('选择颜色', style: TextStyle(fontSize: 18)),
+        Wrap(
+          spacing: 8,
+          children: colors.map((color) {
+            return ChoiceChip(
+              label: Text(color),
+              selectedColor: Colors.blueAccent,
+              selected: chosenColor == color,
+              onSelected: (bool selected) {
+                setState(() {
+                  chosenColor = selected ? color : null;
+                });
+              },
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomActionButtons() {
+    return Row(
+      children: [
+        Expanded(child: ElevatedButton(onPressed: (chosenSize != null && chosenColor != null) ? _confirmAddToCart : null, child: Text('加入购物车'))),
+        SizedBox(width: 8),
+        Expanded(child: ElevatedButton(onPressed: (chosenSize != null && chosenColor != null) ? _confirmBuyNow : null, child: Text('立即购买'))),
+      ],
+    );
+  }
+
+  void _confirmAddToCart() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加入购物车成功')));
+  }
+
+  void _confirmBuyNow() {
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('立即购买成功')));
   }
 }
