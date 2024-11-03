@@ -1,6 +1,3 @@
-// 1、登陆 done
-// 列表 done
-// 详情 todo
 import 'package:flutter/material.dart';
 
 void main() => runApp(MinimalApp());
@@ -127,16 +124,6 @@ class MinimalLogin extends StatelessWidget {
   }
 }
 
-// class MinimalProductList extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Minimal Products')),
-//       body: const Center(child: Text('Minimal style product list')),
-//     );
-//   }
-// }
-
 
 class MinimalProductList extends StatefulWidget {
   @override
@@ -261,18 +248,6 @@ class _MinimalProductListState extends State<MinimalProductList> {
   }
 }
 
-// class GradientProductDetail extends StatelessWidget {
-//   final Map<String, String> product;
-//   GradientProductDetail({required this.product});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text(product['title']!)),
-//       body: Center(child: Text('${product['title']}的详细信息')),
-//     );
-//   }
-// }
 
 
 class GradientProductDetail extends StatefulWidget {

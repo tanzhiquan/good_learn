@@ -1,6 +1,4 @@
-// 1、登陆 done
-// 列表 done
-// 详情 todo
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MinimalApp());
@@ -25,7 +23,6 @@ class _MinimalLogin extends StatelessWidget {
   late Object pass = "";
 
   void signIn(BuildContext context) {
-
     if (userCtrl.text == user && passCtrl.text == pass) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ProList()));
@@ -37,11 +34,10 @@ class _MinimalLogin extends StatelessWidget {
   }
 
   void register(BuildContext context) {
-
     // 获取用户的输入，并将其存储在全局变量中
     user = userCtrl.text;
     pass = passCtrl.text;
-     // 显示弹窗提示用户输入的信息
+    // 显示弹窗提示用户输入的信息
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -181,10 +177,34 @@ class ProList extends StatefulWidget {
 
 class _ProListState extends State<ProList> {
   final List<Map<String, String>> inventory = [
-    {'product': '时尚背包', 'cost': '¥199', 'oldcost': '¥299','img': 'main8/apple.jpg','desc':'商品描述信息'},
-    {'product': '便携音响', 'cost': '¥349', 'oldcost': '¥399','img': 'main8/phone.jpg','desc':'商品描述信息'},
-    {'product': '运动鞋', 'cost': '¥799','oldcost': '¥499', 'img': 'main8/apple.jpg','desc':'商品描述信息'},
-    {'product': '手提电脑', 'cost': '¥4299','oldcost': '¥399', 'img': 'main8/phone.jpg','desc':'商品描述信息'},
+    {
+      'product': '时尚背包',
+      'cost': '¥199',
+      'oldcost': '¥299',
+      'img': 'main8/apple.jpg',
+      'desc': '商品描述信息'
+    },
+    {
+      'product': '便携音响',
+      'cost': '¥349',
+      'oldcost': '¥399',
+      'img': 'main8/phone.jpg',
+      'desc': '商品描述信息'
+    },
+    {
+      'product': '运动鞋',
+      'cost': '¥799',
+      'oldcost': '¥499',
+      'img': 'main8/apple.jpg',
+      'desc': '商品描述信息'
+    },
+    {
+      'product': '手提电脑',
+      'cost': '¥4299',
+      'oldcost': '¥399',
+      'img': 'main8/phone.jpg',
+      'desc': '商品描述信息'
+    },
   ];
 
   List<Map<String, String>> shownItems = [];
@@ -304,21 +324,6 @@ class _ProListState extends State<ProList> {
   }
 }
 
-// class MinimalProductDetail extends StatelessWidget {
-//   final Map<String, String> product;
-//   MinimalProductDetail({required this.product});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(product['product']!),
-//         backgroundColor: Colors.grey.shade800,
-//       ),
-//       body: Center(child: Text('了解更多关于${product['product']}的信息')),
-//     );
-//   }
-// }
 
 class MinimalProductDetail extends StatefulWidget {
   final Map<String, String> item;
@@ -344,8 +349,11 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.item['product']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                Text(widget.item['cost']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
+                Text(widget.item['product']!,
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                Text(widget.item['cost']!,
+                    style: TextStyle(color: Colors.redAccent, fontSize: 20)),
                 Text(widget.item['desc']!, style: TextStyle(fontSize: 16)),
                 SizedBox(height: 16),
                 _buildPurchaseButtons(),
@@ -360,9 +368,15 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
   Widget _buildPurchaseButtons() {
     return Row(
       children: [
-        Expanded(child: ElevatedButton(onPressed: () => _openOptionSelector(context), child: Text('加入购物车'))),
+        Expanded(
+            child: ElevatedButton(
+                onPressed: () => _openOptionSelector(context),
+                child: Text('加入购物车'))),
         SizedBox(width: 8),
-        Expanded(child: ElevatedButton(onPressed: () => _openOptionSelector(context), child: Text('立即购买'))),
+        Expanded(
+            child: ElevatedButton(
+                onPressed: () => _openOptionSelector(context),
+                child: Text('立即购买'))),
       ],
     );
   }
@@ -444,14 +458,18 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: (selectedSize != null && selectedColor != null) ? _confirmAddToCart : null,
+            onPressed: (selectedSize != null && selectedColor != null)
+                ? _confirmAddToCart
+                : null,
             child: Text('加入购物车'),
           ),
         ),
         SizedBox(width: 8),
         Expanded(
           child: ElevatedButton(
-            onPressed: (selectedSize != null && selectedColor != null) ? _confirmBuyNow : null,
+            onPressed: (selectedSize != null && selectedColor != null)
+                ? _confirmBuyNow
+                : null,
             child: Text('立即购买'),
           ),
         ),
@@ -461,12 +479,13 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
 
   void _confirmAddToCart() {
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('已将商品加入购物车')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('已将商品加入购物车')));
   }
 
   void _confirmBuyNow() {
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('立即购买成功')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('立即购买成功')));
   }
 }
-
