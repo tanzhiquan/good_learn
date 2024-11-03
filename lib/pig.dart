@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(AppMain());
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('main2/weixin.jpg'),
+              image: AssetImage('pig/weixin.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -130,21 +129,21 @@ class Products extends StatefulWidget {
 
 class _SimpleProductListState extends State<Products> {
   final List<Map<String, String>> productCatalog = [
-    {'title': '宠物玩具', 'price': '5元', 'image': 'main2/pig2.jpg'},
-    {'title': '猫咪屋', 'price': '109元', 'image': 'main2/pig1.jpg'},
-    {'title': '猫咪零食', 'price': '100元', 'image': 'main2/pig3.jpg'},
-    {'title': '小狗玩具', 'price': '100元', 'image': 'main2/pig4.jpg'},
-    {'title': '零食', 'price': '100元', 'image': 'main2/pig5.jpg'},
-    {'title': '包包', 'price': '100元', 'image': 'main2/pig6.jpg'},
-    {'title': '猫咪背包', 'price': '100元', 'image': 'main2/pig7.jpg'},
-    {'title': '玩具', 'price': '100元', 'image': 'main2/pig8.jpg'},
-    {'title': '猫咪玩具', 'price': '100元', 'image': 'main2/pig9.jpg'},
-    {'title': '零食', 'price': '100元', 'image': 'main2/pig10.jpg'},
-    {'title': '逗猫棒', 'price': '100元', 'image': 'main2/pig11.jpg'},
-    {'title': '毛线球', 'price': '100元', 'image': 'main2/pig12.jpg'},
-    {'title': '背包', 'price': '100元', 'image': 'main2/pig13.jpg'},
-    {'title': '猫咪床', 'price': '100元', 'image': 'main2/pig14.jpg'},
-    {'title': '猫抓板', 'price': '100元', 'image': 'main2/pig15.jpg'},
+    {'title': '宠物玩具', 'price': '5元', 'image': 'pig/pig2.jpg'},
+    {'title': '猫咪屋', 'price': '109元', 'image': 'pig/pig1.jpg'},
+    {'title': '猫咪零食', 'price': '100元', 'image': 'pig/pig3.jpg'},
+    {'title': '小狗玩具', 'price': '100元', 'image': 'pig/pig4.jpg'},
+    {'title': '零食', 'price': '100元', 'image': 'pig/pig5.jpg'},
+    {'title': '包包', 'price': '100元', 'image': 'pig/pig6.jpg'},
+    {'title': '猫咪背包', 'price': '100元', 'image': 'pig/pig7.jpg'},
+    {'title': '玩具', 'price': '100元', 'image': 'pig/pig8.jpg'},
+    {'title': '猫咪玩具', 'price': '100元', 'image': 'pig/pig9.jpg'},
+    {'title': '零食', 'price': '100元', 'image': 'pig/pig10.jpg'},
+    {'title': '逗猫棒', 'price': '100元', 'image': 'pig/pig11.jpg'},
+    {'title': '毛线球', 'price': '100元', 'image': 'pig/pig12.jpg'},
+    {'title': '背包', 'price': '100元', 'image': 'pig/pig13.jpg'},
+    {'title': '猫咪床', 'price': '100元', 'image': 'pig/pig14.jpg'},
+    {'title': '猫抓板', 'price': '100元', 'image': 'pig/pig15.jpg'},
   ];
 
   List<Map<String, String>> visibleProducts = [];
