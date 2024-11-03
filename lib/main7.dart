@@ -18,8 +18,8 @@ class MinimalLogin extends StatelessWidget {
   final TextEditingController passCtrl = TextEditingController();
 
   void signIn(BuildContext context) {
-    String user = "";
-    String pass = "";
+    String user = ""; // 这里可以替换为实际的用户名
+    String pass = ""; // 这里可以替换为实际的密码
     if (userCtrl.text == user && passCtrl.text == pass) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => MinimalProductList()));
     } else {
@@ -58,7 +58,7 @@ class MinimalLogin extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color:  Color.fromARGB(221, 103, 63, 180), width: 1),
+                      borderSide: const BorderSide(color: Color.fromARGB(221, 103, 63, 180), width: 1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -88,32 +88,38 @@ class MinimalLogin extends StatelessWidget {
                   ),
                   obscureText: true,
                 ),
+                const SizedBox(height: 10),
+                // 忘记密码和注册按钮
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('忘记密码功能尚未实现')),
+                        );
+                      },
+                      child: const Text('忘记密码？', style: TextStyle(color: Colors.blue)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('注册完成')),
+                        );
+                      },
+                      child: const Text('注册', style: TextStyle(color: Colors.blue)),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => signIn(context),
                   style: ButtonStyle(
                     alignment: Alignment.centerLeft,
-                    // font color
-                    foregroundColor: WidgetStateProperty.all(Colors.white),
-                    // set color
-                    backgroundColor: WidgetStateProperty.all(const Color.fromARGB(221, 103, 63, 180)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(const Color.fromARGB(221, 103, 63, 180)),
                   ),
                   child: const Text('登陆'),  
-                ),
-                ElevatedButton(
-                  onPressed: () => {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('注册完成')),
-                    ),
-                  },
-                  style: ButtonStyle(
-                    alignment: Alignment.centerLeft,
-                    // font color
-                    foregroundColor: WidgetStateProperty.all(Colors.white),
-                    // set color
-                    backgroundColor: WidgetStateProperty.all(Color.fromARGB(221, 103, 63, 180)),
-                  ),
-                  child: const Text('注册'),  
                 ),
               ],
             ),
@@ -123,7 +129,6 @@ class MinimalLogin extends StatelessWidget {
     );
   }
 }
-
 
 class MinimalProductList extends StatefulWidget {
   @override
