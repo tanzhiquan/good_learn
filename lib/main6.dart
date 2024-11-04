@@ -1,13 +1,12 @@
-// 1、登陆 done
-// 列表 done
-// 详情 todo
 import 'package:flutter/material.dart';
 
 void main() => runApp(InkStyleApp());
-
+// 定义一个名为InkStyleApp的无状态小部件类
 class InkStyleApp extends StatelessWidget {
+  // 重写build方法，返回一个MaterialApp实例
   @override
   Widget build(BuildContext context) {
+    // 返回MaterialApp，配置应用的基本信息和主题
     return MaterialApp(
       title: '登录',
       home: InkLogin(),
@@ -16,24 +15,29 @@ class InkStyleApp extends StatelessWidget {
   }
 }
 
+// 定义一个名为InkLogin的无状态小部件类，用于登录界面
 class InkLogin extends StatelessWidget {
+  // 声明用户名和密码的文本控制器
   final TextEditingController inkUser = TextEditingController();
   final TextEditingController inkPass = TextEditingController();
 
+  // 处理登录逻辑的方法
   void handleLogin(BuildContext context) {
-    String correctUser = "";
-    String correctPass = "";
-    if (inkUser.text == correctUser && inkPass.text == correctPass) {
+    // 如果用户名和密码都为空，则导航到产品页面
+    if (inkUser.text == "" && inkPass.text == "") {
       Navigator.push(context, MaterialPageRoute(builder: (context) => InkProduct()));
     } else {
+      // 否则，显示SnackBar提示用户名或密码错误
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('用户名或密码错误')),
       );
     }
   }
 
+  // 重写build方法，返回登录界面的布局
   @override
   Widget build(BuildContext context) {
+    // 返回Scaffold，配置登录界面的背景、应用栏和主体内容
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -42,17 +46,20 @@ class InkLogin extends StatelessWidget {
       ),
       body: Center(
         child: Container(
+          // 设置容器的背景图片
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("main6/bg.jpg"), 
+              image: AssetImage("main6/sky.jpg"),
               fit: BoxFit.cover,
             ),
           ),
+          // 添加内边距
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // 用户名输入框
                 TextField(
                   controller: inkUser,
                   decoration: InputDecoration(
@@ -64,6 +71,7 @@ class InkLogin extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15),
+                // 密码输入框
                 TextField(
                   controller: inkPass,
                   obscureText: true,
@@ -76,6 +84,7 @@ class InkLogin extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
+                // 登录按钮
                 ElevatedButton(
                   onPressed: () => handleLogin(context),
                   style: ElevatedButton.styleFrom(
@@ -86,6 +95,7 @@ class InkLogin extends StatelessWidget {
                   ),
                   child: const Text('登录', style: TextStyle(color: Colors.black, fontSize: 18)),
                 ),
+                // 注册按钮，暂未实现功能
                 ElevatedButton(
                   onPressed: () => (),
                   style: ElevatedButton.styleFrom(
@@ -114,12 +124,20 @@ class InkProduct extends StatefulWidget {
 class _InkProductPageState extends State<InkProduct> {
  
   final List<Map<String, String>> catalogItems = [
-    {'name': '毛绒玩具', 'price': '¥89', 'image': 'main6/phone.jpg','detail':'补充商品描述'},
-    {'name': '拼图', 'price': '¥39', 'image': 'main6/apple.jpg','detail':'补充商品描述'},
-    {'name': '彩色积木', 'price': '¥59', 'image': 'main6/phone.jpg','detail':'补充商品描述'},
-    {'name': '模型车', 'price': '¥129', 'image': 'main6/apple.jpg','detail':'补充商品描述'},
+    {'name': '手机1', 'price': '3456元', 'image': 'main6/phone1.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机2', 'price': '5678元', 'image': 'main6/phone2.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机3', 'price': '8910元', 'image': 'main6/phone3.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机4', 'price': '4321元', 'image': 'main6/phone4.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机5', 'price': '6789元', 'image': 'main6/phone5.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机6', 'price': '7654元', 'image': 'main6/phone6.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机7', 'price': '9876元', 'image': 'main6/phone7.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机8', 'price': '5432元', 'image': 'main6/phone8.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机9', 'price': '8765元', 'image': 'main6/phone9.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机0', 'price': '4567元', 'image': 'main6/phone10.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机1', 'price': '7890元', 'image': 'main6/phone11.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机2', 'price': '6543元', 'image': 'main6/phone12.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机3', 'price': '9012元', 'image': 'main6/phone13.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
   ];
-
   List<Map<String, String>> availableItems = [];
   final TextEditingController searchBoxController = TextEditingController();
 
@@ -142,7 +160,7 @@ class _InkProductPageState extends State<InkProduct> {
     return Scaffold(
       backgroundColor: Colors.orangeAccent,
       appBar: AppBar(
-        title: const Text('卡通商品陈列', style: TextStyle(color: Colors.white)),
+        title: const Text('手机列表', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.orange,
       ),
       body: Column(
@@ -215,22 +233,6 @@ class _InkProductPageState extends State<InkProduct> {
   }
 }
 
-// class CartoonProductDetail extends StatelessWidget {
-//   final Map<String, String> item;
-//   CartoonProductDetail({required this.item});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(item['name']!),
-//         backgroundColor: Colors.orange,
-//       ),
-//       body: Center(child: Text('这是${item['name']}的卡通风详情')),
-//     );
-//   }
-// }
-
 
 class CartoonProductDetail extends StatefulWidget {
   final Map<String, String> item;
@@ -243,8 +245,8 @@ class CartoonProductDetail extends StatefulWidget {
 class _CartoonProductDetailState extends State<CartoonProductDetail> {
   String? chosenSize;
   String? chosenColor;
-  final List<String> sizes = ['S', 'M', 'L'];
-  final List<String> colors = ['红色', '蓝色', '黑色'];
+  final List<String> sizes = ['8G', '16G', '32G'];
+  final List<String> yunyingshang = ['移动', '电信', '联通'];
 
   @override
   Widget build(BuildContext context) {
@@ -316,7 +318,7 @@ class _CartoonProductDetailState extends State<CartoonProductDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('选择尺寸', style: TextStyle(fontSize: 18)),
+        Text('选择内存', style: TextStyle(fontSize: 18)),
         Wrap(
           spacing: 8,
           children: sizes.map((size) {
@@ -340,17 +342,17 @@ class _CartoonProductDetailState extends State<CartoonProductDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('选择颜色', style: TextStyle(fontSize: 18)),
+        Text('选择运营商', style: TextStyle(fontSize: 18)),
         Wrap(
           spacing: 8,
-          children: colors.map((color) {
+          children: yunyingshang.map((aa) {
             return ChoiceChip(
-              label: Text(color),
+              label: Text(aa),
               selectedColor: Colors.blueAccent,
-              selected: chosenColor == color,
+              selected: chosenColor == aa,
               onSelected: (bool selected) {
                 setState(() {
-                  chosenColor = selected ? color : null;
+                  chosenColor = selected ? aa : null;
                 });
               },
             );

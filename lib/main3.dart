@@ -1,10 +1,5 @@
-// 登陆 done
-// 列表 done
-// 详情 done
-
 import 'package:flutter/material.dart';
 
-// 应用的入口函数
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,7 +8,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'app Demo',
       home: DengLu(),
-      // 隐藏debug标签
     );
   }
 }
@@ -24,10 +18,8 @@ class DengLu extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   void _login(BuildContext context) {
-    // 登录逻辑 需要补充密码校验
     var username = "";
     var password = "";
-    // 初始化账号密码
     if (usernameController.text == username &&
         passwordController.text == password) {
       Navigator.push(
@@ -36,7 +28,7 @@ class DengLu extends StatelessWidget {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid username or password')),
+        const SnackBar(content: Text('密码错误')),
       );
     }
   }
@@ -98,7 +90,6 @@ class DengLu extends StatelessWidget {
                           suffixIcon: IconButton(
                             icon: Icon(Icons.visibility),
                             onPressed: () {
-                              // Toggle password visibility
                             },
                           ),
                         ),
@@ -190,13 +181,16 @@ class ZhuCe extends StatelessWidget {
   }
 }
 
-// 列表页面
+// 产品列表页面，继承自StatefulWidget
 class ProductListPage extends StatefulWidget {
   @override
+  // 创建与此StatefulWidget关联的状态对象
   ProductList createState() => ProductList();
 }
 
+  // 产品列表State
 class ProductList extends State<ProductListPage> {
+  // 保存所有的产品信息
   final List<Map<String, String>> _allProducts = [
     {'name': '家电1', 'price': '¥89', 'image': 'main3/jiadian1.jpg'},
     {'name': '家电2', 'price': '¥89', 'image': 'main3/jiadian2.jpg'},
@@ -215,17 +209,22 @@ class ProductList extends State<ProductListPage> {
     {'name': '家电15', 'price': '¥89', 'image': 'main3/jiadian15.jpg'},
   ];
 
+  // 保存当前显示的产品信息
   List<Map<String, String>> _displayedProducts = [];
+  // 保存搜索框的内容
   TextEditingController _searchController = TextEditingController();
 
   @override
+  // 在State对象被插入到树中时调用
   void initState() {
     super.initState();
     _displayedProducts = List.from(_allProducts);
   }
 
+  // 搜索框的回调函数
   void _searchProducts(String query) {
     setState(() {
+      // 通过搜索框的内容来过滤产品
       _displayedProducts = _allProducts
           .where((product) =>
           product['name']!.toLowerCase().contains(query.toLowerCase()))
@@ -259,6 +258,7 @@ class ProductList extends State<ProductListPage> {
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(10),
+              //  products的布局
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.7,
@@ -266,9 +266,11 @@ class ProductList extends State<ProductListPage> {
                 mainAxisSpacing: 10,
               ),
               itemCount: _displayedProducts.length,
+              //  products的item builder
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    //  点击某个product时，跳转到对应的详情页面
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -286,7 +288,9 @@ class ProductList extends State<ProductListPage> {
                           fit: BoxFit.cover,
                         ),
                       ),
+                      //  product的名称
                       Text(_displayedProducts[index]['name']!),
+                      //  product的价格
                       Text(_displayedProducts[index]['price']!,
                           style: const TextStyle(color: Colors.red)),
                     ],
@@ -317,7 +321,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   String? selectedSize;
 
   final List<String> colors = ['红色', '蓝色', '黑色', '白色'];
-  final List<String> sizes = ['S', 'M', 'L', 'XL'];
 
   @override
   Widget build(BuildContext context) {
@@ -347,11 +350,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   SizedBox(height: 8),
                   Text(
                       '这是一个高品质的${widget
-                          .product['name']}，采用优质材料制作，舒适耐穿。适合各种场合穿着，是您的理想选择。'),
+                          .product['name']}，这款家电集高效、节能与智能于一体，操作简便，性能卓越，为现代家庭带来便捷与舒适。设计时尚，耐用性强，是提升生活品质的理想选择。'
+                  ),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => _showSelectionBottomSheet(context),
-                    child: const Text('选择颜色和尺寸'),
+                    child: const Text('选择颜色'),
                   ),
                 ],
               ),
@@ -394,25 +398,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         .toList(),
                   ),
                   SizedBox(height: 16),
-                  Text('选择尺寸',
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    children: sizes
-                        .map((size) =>
-                        ChoiceChip(
-                          label: Text(size),
-                          selected: selectedSize == size,
-                          onSelected: (selected) {
-                            setState(() {
-                              selectedSize = selected ? size : null;
-                            });
-                          },
-                        ))
-                        .toList(),
-                  ),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: (selectedColor != null && selectedSize != null)

@@ -1,6 +1,3 @@
-// 1、登陆 done
-// 列表 done
-// 详情 todo
 import 'package:flutter/material.dart';
 
 void main() => runApp(ClassicalApp());
@@ -15,24 +12,37 @@ class ClassicalApp extends StatelessWidget {
     );
   }
 }
-
-// 登录页面
+// ClassicalLogin 类继承自 StatelessWidget，用于实现一个经典的登录界面
 class ClassicalLogin extends StatelessWidget {
+  // 用户名输入框的控制器，用于获取用户输入的用户名
   final TextEditingController userController = TextEditingController();
+  // 密码输入框的控制器，用于获取用户输入的密码
   final TextEditingController passController = TextEditingController();
 
+  /**
+   * 尝试验证用户身份
+   *
+   * 此方法会比较用户输入的用户名和密码与预设的用户名和密码是否匹配
+   * 如果匹配成功，将导航到产品列表页面，否则显示错误提示信息
+   *
+   * @param context BuildContext 类型，用于导航和显示SnackBar
+   */
   void authenticateUser(BuildContext context) {
+    // 预设的用户名和密码，当前为空字符串
     String expectedUser = "";
     String expectedPass = "";
+    // 比较用户输入与预设值，如果匹配则导航到产品列表页面
     if (userController.text == expectedUser && passController.text == expectedPass) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => ClassicalProductList()));
     } else {
+      // 如果用户名或密码不正确，显示SnackBar提示用户
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('账号或密码不正确')),
       );
     }
   }
 
+  // 构建登录界面的UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +53,7 @@ class ClassicalLogin extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("main5/bg.jpg"), 
+            image: AssetImage("main5/blue.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -129,6 +139,7 @@ class ClassicalLogin extends StatelessWidget {
   }
 }
 
+
 // 产品列表页面
 class ClassicalProductList extends StatefulWidget {
   @override
@@ -137,10 +148,20 @@ class ClassicalProductList extends StatefulWidget {
 
 class _CardStyleProductListState extends State<ClassicalProductList> {
   final List<Map<String, String>> productItems = [
-    {'productName': '智能手环', 'priceTag': '¥179', 'image': 'main5/apple.jpg','detail':"需要补充详情"},
-    {'productName': '无线音箱', 'priceTag': '¥299', 'image': 'main5/apple.jpg','detail':"需要补充详情"},
-    {'productName': '笔记本电脑', 'priceTag': '¥3599', 'image': 'main5/phone.jpg','detail':"需要补充详情"},
-    {'productName': '空气净化器', 'priceTag': '¥799', 'image': 'main5/phone.jpg','detail':"需要补充详情"},
+    {'productName': '黄油饼干', 'priceTag': '120元', 'image': 'main5/food1.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '巧克力饼干', 'priceTag': '183元', 'image': 'main5/food2.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '咪咪', 'priceTag': '78元', 'image': 'main5/food3.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '巧克力夹心脆', 'priceTag': '265元', 'image': 'main5/food4.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '香菇肥牛', 'priceTag': '45元', 'image': 'main5/food5.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '紫皮腰果', 'priceTag': '203元', 'image': 'main5/food6.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '番茄味薯片', 'priceTag': '39元', 'image': 'main5/food7.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '港荣蒸蛋糕', 'priceTag': '145元', 'image': 'main5/food8.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '脆脆鲨', 'priceTag': '299元', 'image': 'main5/food10.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '芝士蛋黄酥', 'priceTag': '217元', 'image': 'main5/food11.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '卤蛋', 'priceTag': '107元', 'image': 'main5/food12.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '蛋黄酥', 'priceTag': '161元', 'image': 'main5/food13.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '卤蛋（独立包装）', 'priceTag': '58元', 'image': 'main5/food14.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
+    {'productName': '海味鱼豆腐', 'priceTag': '274元', 'image': 'main5/food15.jpg','detail':"这款食品精选上等原料，经过严格质量控制与精心加工，确保每一口都是安全美味的享受。它不仅满足了味蕾的追求，还富含必要的营养成分，为您提供健康均衡的饮食选择。实用环保的包装设计，便于储存和携带，保持食品的新鲜度和最佳口感。无论是忙碌的工作日还是悠闲的周末，这款食品都能迅速补充能量，成为您享受便捷健康生活的理想伴侣。我们致力于通过创新配方和多样化产品线，迎合不同消费者的口味和饮食偏好，让每一次用餐都成为愉悦的体验。选择我们，让美食的快乐融入生活的每一个角落，增添无限精彩。"},
   ];
 
   List<Map<String, String>> currentDisplayProducts = [];
@@ -239,19 +260,6 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
   }
 }
 
-// class CardStyleProductDetail extends StatelessWidget {
-//   final Map<String, String> item;
-//   CardStyleProductDetail({required this.item});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text(item['productName']!)),
-//       body: Center(child: Text('${item['productName']}的详细介绍')),
-//     );
-//   }
-// }
-
 
 class CardStyleProductDetail extends StatefulWidget {
   final Map<String, String> item;
@@ -264,34 +272,43 @@ class CardStyleProductDetail extends StatefulWidget {
 class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
   String? selectedSize;
   String? selectedColor;
-  final List<String> sizes = ['S', 'M', 'L'];
-  final List<String> colors = ['红色', '蓝色', '黑色'];
-
+  final List<String> sizes = ['大份', '中份', '小份'];
+  // 重写build方法以构建UI界面
   @override
   Widget build(BuildContext context) {
+    // 返回一个Scaffold作为主布局结构
     return Scaffold(
+      // 设置AppBar，包含产品名称
       appBar: AppBar(
         title: Text(widget.item['productName']!),
         backgroundColor: Colors.blueAccent,
       ),
+      // 使用SingleChildScrollView包裹Column，允许垂直滚动
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 显示产品图片，覆盖整个屏幕宽度，高度为300
             Image.asset(widget.item['image']!, fit: BoxFit.cover, width: double.infinity, height: 300),
+            // 使用Padding包裹产品详细信息
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 显示产品名称，使用较大的字体和粗体
                   Text(widget.item['productName']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
+                  // 显示产品价格，使用红色和较大的字体
                   Text(widget.item['priceTag']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
                   SizedBox(height: 16),
+                  // 显示“商品描述”标题，使用较大的字体和粗体
                   Text('商品描述', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
+                  // 显示产品详细描述
                   Text(widget.item['detail']!),
                   SizedBox(height: 16),
+                  // 显示两个按钮：“加入购物车”和“立即购买”
                   Row(
                     children: [
                       Expanded(
@@ -320,6 +337,7 @@ class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
     );
   }
 
+  // 显示底部弹出菜单，用于选择产品规格
   void _showOptionsBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -333,9 +351,12 @@ class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 显示“选择规格”标题，使用较大的字体和粗体
                   Text('选择规格', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
+                  // 显示“尺寸”标题，使用较大的字体
                   Text('尺寸', style: TextStyle(fontSize: 16)),
+                  // 显示可选择的尺寸芯片
                   Wrap(
                     spacing: 8,
                     children: sizes.map((size) {
@@ -352,23 +373,7 @@ class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
                     }).toList(),
                   ),
                   SizedBox(height: 16),
-                  Text('颜色', style: TextStyle(fontSize: 16)),
-                  Wrap(
-                    spacing: 8,
-                    children: colors.map((color) {
-                      return ChoiceChip(
-                        label: Text(color),
-                        selectedColor: Colors.blueAccent,
-                        selected: selectedColor == color,
-                        onSelected: (bool selected) {
-                          setState(() {
-                            selectedColor = selected ? color : null;
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 16),
+                  // 显示两个按钮：“加入购物车”和“立即购买”，根据选择的规格启用或禁用
                   Row(
                     children: [
                       Expanded(
@@ -400,6 +405,7 @@ class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
       },
     );
   }
+
 
   void _addToCart(BuildContext context) {
     Navigator.pop(context);

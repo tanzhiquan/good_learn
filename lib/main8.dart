@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(MinimalApp());
@@ -13,15 +12,22 @@ class MinimalApp extends StatelessWidget {
     );
   }
 }
-
+// 忽略必须是不可变的警告，因为这个类需要处理状态变化
 // ignore: must_be_immutable
 class _MinimalLogin extends StatelessWidget {
+  // 文本控制器，用于获取用户输入的用户名和密码
   final TextEditingController userCtrl = TextEditingController();
   final TextEditingController passCtrl = TextEditingController();
 
+  // 用户名和密码变量，初始化为空字符串
   late Object user = "";
   late Object pass = "";
 
+  /**
+   * 登录方法
+   * 检查用户输入的用户名和密码是否与存储的值匹配
+   * 如果匹配，则导航到ProList页面，否则显示登录错误的SnackBar
+   */
   void signIn(BuildContext context) {
     if (userCtrl.text == user && passCtrl.text == pass) {
       Navigator.push(
@@ -33,6 +39,11 @@ class _MinimalLogin extends StatelessWidget {
     }
   }
 
+  /**
+   * 注册方法
+   * 获取用户的输入，并将其存储在全局变量中
+   * 然后显示一个弹窗，提示用户输入的信息
+   */
   void register(BuildContext context) {
     // 获取用户的输入，并将其存储在全局变量中
     user = userCtrl.text;
@@ -78,7 +89,7 @@ class _MinimalLogin extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            "main8/bg.jpg",
+            "main8/sea.jpg",
             fit: BoxFit.cover,
           ),
           Padding(
@@ -133,7 +144,7 @@ class _MinimalLogin extends StatelessWidget {
                         children: [
                           TextButton(
                             onPressed: () {
-                              // Your forgot password action here
+
                             },
                             child: const Text('忘记密码?',
                                 style: TextStyle(color: Colors.white)),
@@ -177,34 +188,14 @@ class ProList extends StatefulWidget {
 
 class _ProListState extends State<ProList> {
   final List<Map<String, String>> inventory = [
-    {
-      'product': '时尚背包',
-      'cost': '¥199',
-      'oldcost': '¥299',
-      'img': 'main8/apple.jpg',
-      'desc': '商品描述信息'
-    },
-    {
-      'product': '便携音响',
-      'cost': '¥349',
-      'oldcost': '¥399',
-      'img': 'main8/phone.jpg',
-      'desc': '商品描述信息'
-    },
-    {
-      'product': '运动鞋',
-      'cost': '¥799',
-      'oldcost': '¥499',
-      'img': 'main8/apple.jpg',
-      'desc': '商品描述信息'
-    },
-    {
-      'product': '手提电脑',
-      'cost': '¥4299',
-      'oldcost': '¥399',
-      'img': 'main8/phone.jpg',
-      'desc': '商品描述信息'
-    },
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi1.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi3.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi4.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi5.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi6.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi7.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi8.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
+    {'product': '鞋子', 'cost': '¥199', 'oldcost': '¥299', 'img': 'main8/xiezi9.jpg', 'desc': '这款鞋子采用优质材料制作，设计时尚，舒适合脚。其耐磨鞋底和透气鞋面提供了良好的支撑和透气性，适合日常穿着和各种户外活动。流线型设计不仅美观，还能减少运动阻力，提升穿着体验。无论是休闲出行还是运动健身，都是理想的选择。'},
   ];
 
   List<Map<String, String>> shownItems = [];
@@ -410,7 +401,7 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
   }
 
   Widget _buildSizeOptions(StateSetter setState) {
-    final sizes = ['S', 'M', 'L'];
+    final sizes = ['37码', '38码', '39码'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -432,7 +423,7 @@ class _CardStyleProductDetailState extends State<MinimalProductDetail> {
   }
 
   Widget _buildColorOptions(StateSetter setState) {
-    final colors = ['红色', '蓝色', '黑色'];
+    final colors = ['白色', '黑色'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

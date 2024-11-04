@@ -1,6 +1,3 @@
-// 1、登陆 done
-// 列表 done
-// 详情 done
 import 'package:flutter/material.dart';
 
 void main() => runApp(MetalApp());
@@ -21,14 +18,12 @@ class MetalLogin extends StatelessWidget {
   final TextEditingController metalPass = TextEditingController();
 
   void accessAccount(BuildContext context) {
-    String adminUser = "";
-    String adminPass = "";
-    if (metalUser.text == adminUser && metalPass.text == adminPass) {
+    if (true) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ItemScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Access Denied')),
+        const SnackBar(content: Text('拒绝登陆')),
       );
     }
   }
@@ -44,7 +39,6 @@ class MetalLogin extends StatelessWidget {
                   TextButton(
                     child: Text('客服', style: TextStyle(color: Colors.amber)),
                     onPressed: () {
-                      // Your customer service action here
                     },
                   ),
                 ],
@@ -53,7 +47,7 @@ class MetalLogin extends StatelessWidget {
         child: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('main4/bg.jpg'),
+              image: AssetImage('main4/pic.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -99,13 +93,11 @@ class MetalLogin extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Your forgot password action here
                     },
                     child: const Text('忘记密码?', style: TextStyle(color: Colors.amber)),
                   ),
                   TextButton(
                     onPressed: () {
-                      // Your register action here
                     },
                     child: const Text('注册', style: TextStyle(color: Colors.amber)),
                   ),
@@ -139,10 +131,21 @@ class ItemScreen extends StatefulWidget {
 class _ItemScreenState extends State<ItemScreen> {
   // List of products
   final List<Map<String, String>> productList = [
-    {'name': '运动相机', 'cost': '¥399', 'img': 'main4/apple.jpg','detail':'商品描述'},
-    {'name': '电竞耳机', 'cost': '¥299', 'img': 'main4/phone.jpg','detail':'商品描述'},
-    {'name': '运动相机', 'cost': '¥399', 'img': 'main4/apple.jpg','detail':'商品描述'},
-    {'name': '电竞耳机', 'cost': '¥299', 'img': 'main4/phone.jpg','detail':'商品描述'},
+    {'name': '牙刷', 'cost': '25元', 'img': 'main4/ryp1.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '拖鞋', 'cost': '25元', 'img': 'main4/ryp2.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '毛巾', 'cost': '25元', 'img': 'main4/ryp3.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '牙刷2', 'cost': '25元', 'img': 'main4/ryp4.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '纸巾', 'cost': '25元', 'img': 'main4/ryp5.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '垫子', 'cost': '25元', 'img': 'main4/ryp6.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '刷子', 'cost': '25元', 'img': 'main4/ryp7.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '消毒水', 'cost': '25元', 'img': 'main4/ryp8.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '洗洁精', 'cost': '25元', 'img': 'main4/ryp9.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '一家', 'cost': '25元', 'img': 'main4/ryp10.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '拖鞋2', 'cost': '25元', 'img': 'main4/ryp11.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '拖鞋', 'cost': '25元', 'img': 'main4/ryp12.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '工具', 'cost': '25元', 'img': 'main4/ryp13.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '扫帚', 'cost': '25元', 'img': 'main4/ryp14.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
+    {'name': '衣服', 'cost': '25元', 'img': 'main4/ryp15.jpg','detail':'日用品系列，精心设计，满足日常生活所需。每件产品均采用优质材料，耐用且实用，旨在提升您的生活品质。无论是个人护理、家居清洁还是日常饮食，这些产品都能带给您舒适便捷的使用体验。它们不仅外观简洁大方，而且功能性强，易于操作，能够适应快节奏的现代生活。选择这些日用品，您将享受到更高效、更环保的生活方式，让日常琐事变得更加轻松愉快。'},
   ];
 
   List<Map<String, String>> filteredProducts = [];
@@ -271,34 +274,44 @@ class _DarkThemeProductDetailState extends State<DarkThemeProductDetail> {
     return value ?? defaultValue;
   }
 
-  @override
+  // 重写build方法以构建产品详情页面
+  @Override
   Widget build(BuildContext context) {
+    // 返回一个黑色背景的脚手架，包含产品详情的布局
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        // 设置应用栏的标题为产品名称，文本颜色为白色
         title: Text(_getProductValue('name'), style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
+        // 使用单ChildScrollView包裹列布局，以支持滚动
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 显示产品图片，覆盖整个屏幕宽度，高度为300
             Image.asset(_getProductValue('img'), fit: BoxFit.cover, width: double.infinity, height: 300),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 显示产品名称，使用较大的字体和加粗样式
                   Text(_getProductValue('name'), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
                   SizedBox(height: 8),
+                  // 显示产品价格，文本颜色为红色，字体稍小
                   Text(_getProductValue('price'), style: TextStyle(color: Colors.redAccent, fontSize: 20)),
                   SizedBox(height: 16),
+                  // 显示商品描述的标题
                   Text('商品描述', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                   SizedBox(height: 8),
+                  // 显示产品详细信息
                   Text('${_getProductValue('detail')}', style: TextStyle(color: Colors.white70)),
                   SizedBox(height: 16),
                   SizedBox(height: 8),
                   SizedBox(height: 16),
+                  // 显示两个按钮：加入购物车和立即购买
                   Row(
                     children: [
                       Expanded(
@@ -327,7 +340,9 @@ class _DarkThemeProductDetailState extends State<DarkThemeProductDetail> {
     );
   }
 
+  // 显示选项的底部弹出菜单
   void _showOptionsBottomSheet(BuildContext context) {
+    // 使用模态底部弹出菜单显示选择规格的界面
     showModalBottomSheet(
       backgroundColor: Colors.grey[900],
       context: context,
@@ -340,8 +355,10 @@ class _DarkThemeProductDetailState extends State<DarkThemeProductDetail> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 显示选择规格的标题
                   Text('选择规格', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey[400])),
                   SizedBox(height: 8),
+                  // 显示可选择的规格芯片
                   Wrap(
                     spacing: 8,
                     children: specs.map((spec) {
@@ -358,6 +375,7 @@ class _DarkThemeProductDetailState extends State<DarkThemeProductDetail> {
                     }).toList(),
                   ),
                   SizedBox(height: 16),
+                  // 显示加入购物车和立即购买的按钮，根据选择的规格启用或禁用
                   Row(
                     children: [
                       Expanded(
@@ -385,7 +403,6 @@ class _DarkThemeProductDetailState extends State<DarkThemeProductDetail> {
       },
     );
   }
-
   void _addToCart(BuildContext context) {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(

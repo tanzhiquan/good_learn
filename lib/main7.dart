@@ -18,8 +18,8 @@ class MinimalLogin extends StatelessWidget {
   final TextEditingController passCtrl = TextEditingController();
 
   void signIn(BuildContext context) {
-    String user = ""; // 这里可以替换为实际的用户名
-    String pass = ""; // 这里可以替换为实际的密码
+    String user = "";
+    String pass = "";
     if (userCtrl.text == user && passCtrl.text == pass) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => MinimalProductList()));
     } else {
@@ -38,7 +38,7 @@ class MinimalLogin extends StatelessWidget {
         children: [
           // 背景图片
           Image.asset(
-            "main7/bg.jpg", 
+            "main7/yellow.jpg",
             fit: BoxFit.cover,
           ),
           // 登录表单
@@ -137,10 +137,16 @@ class MinimalProductList extends StatefulWidget {
 
 class _MinimalProductListState extends State<MinimalProductList> {
   final List<Map<String, String>> products = [
-    {'title': '蓝牙耳机', 'price': '¥299', 'image': 'main7/phone.jpg','description':'这是商品详情信息'},
-    {'title': '智能手表', 'price': '¥499', 'image': 'main7/apple.jpg','description':'这是商品详情信息'},
-    {'title': '蓝牙耳机', 'price': '¥299', 'image': 'main7/phone.jpg','description':'这是商品详情信息'},
-    {'title': '智能手表', 'price': '¥499', 'image': 'main7/apple.jpg','description':'这是商品详情信息'},
+    {'title': '黑色中性笔', 'price': '¥299', 'image': 'main7/wenju1.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '笔记本', 'price': '¥299', 'image': 'main7/wenju2.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '考试专用笔', 'price': '¥299', 'image': 'main7/wenju3.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '学生套尺', 'price': '¥299', 'image': 'main7/wenju4.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '铅笔刀', 'price': '¥299', 'image': 'main7/wenju5.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '橡皮擦', 'price': '¥299', 'image': 'main7/wenju6.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '本子', 'price': '¥299', 'image': 'main7/wenju7.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '订书机', 'price': '¥299', 'image': 'main7/wenju8.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '笔袋', 'price': '¥299', 'image': 'main7/wenju9.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
+    {'title': '便利贴', 'price': '¥299', 'image': 'main7/wenju10.jpg','description':'这款文具系列以其精致设计和实用性深受用户喜爱。每件文具都经过精心打造，不仅外观时尚，而且功能多样，满足日常学习和办公需求。'},
   ];
 
   List<Map<String, String>> filteredProducts = [];
@@ -262,11 +268,14 @@ class GradientProductDetail extends StatefulWidget {
   @override
   _CardStyleProductDetailState createState() => _CardStyleProductDetailState();
 }
-
+// 商品详情页面的样式类
 class _CardStyleProductDetailState extends State<GradientProductDetail> {
+  // 当前选择的尺码
   String? currentSize;
+  // 当前选择的颜色
   String? currentColor;
 
+  // 构建商品详情页面的UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -281,6 +290,7 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
     );
   }
 
+  // 显示商品详细信息的Widget
   Widget _productDetails() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -289,13 +299,14 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
         children: [
           Text(widget.item['title']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           Text(widget.item['price']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
-        //  添加商品详情，灰色小号字体
+          // 添加商品详情，灰色小号字体
           Text(widget.item['description']!, style: TextStyle(color: Colors.grey, fontSize: 16)),
         ],
       ),
     );
   }
 
+  // 显示订单操作按钮的Widget
   Widget _orderActions() {
     return Row(
       children: [
@@ -305,6 +316,7 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
     );
   }
 
+  // 打开底部选项弹窗
   void _openOptionsSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -314,6 +326,7 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
     );
   }
 
+  // 构建底部弹窗内的选项内容
   Widget _buildOptions() {
     return StatefulBuilder(
       builder: (context, setState) {
@@ -321,7 +334,6 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              _sizeSelector(setState),
               _colorSelector(setState),
               _bottomButtons(),
             ],
@@ -331,26 +343,9 @@ class _CardStyleProductDetailState extends State<GradientProductDetail> {
     );
   }
 
-  Widget _sizeSelector(StateSetter setState) {
-    final sizes = ['S', 'M', 'L'];
-    return Wrap(
-      spacing: 8,
-      children: sizes.map((size) {
-        return ChoiceChip(
-          label: Text(size),
-          selected: currentSize == size,
-          onSelected: (selected) {
-            setState(() {
-              currentSize = selected ? size : null;
-            });
-          },
-        );
-      }).toList(),
-    );
-  }
 
   Widget _colorSelector(StateSetter setState) {
-    final colors = ['红色', '蓝色', '黑色'];
+    final colors = ['白色', '蓝色', '黄色'];
     return Wrap(
       spacing: 8,
       children: colors.map((color) {
