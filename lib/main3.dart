@@ -25,8 +25,8 @@ class DengLu extends StatelessWidget {
 
   void _login(BuildContext context) {
     // 登录逻辑 需要补充密码校验
-    var username = "admin";
-    var password = "123456";
+    var username = "";
+    var password = "";
     // 初始化账号密码
     if (usernameController.text == username &&
         passwordController.text == password) {
@@ -51,7 +51,7 @@ class DengLu extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/bg.jpg"),
+            image: AssetImage("main3/ball.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -198,16 +198,21 @@ class ProductListPage extends StatefulWidget {
 
 class ProductList extends State<ProductListPage> {
   final List<Map<String, String>> _allProducts = [
-    {'name': '旗舰手机', 'price': '¥789', 'image': 'assets/phone.jpg'},
-    {'name': '苹果', 'price': '¥100', 'image': 'assets/apple.jpg'},
-    {'name': '旗舰手机', 'price': '¥789', 'image': 'assets/phone.jpg'},
-    {'name': '苹果', 'price': '¥100', 'image': 'assets/apple.jpg'},
-    {'name': '旗舰手机', 'price': '¥789', 'image': 'assets/phone.jpg'},
-    {'name': '苹果', 'price': '¥100', 'image': 'assets/apple.jpg'},
-    {'name': '旗舰手机', 'price': '¥789', 'image': 'assets/phone.jpg'},
-    {'name': '苹果', 'price': '¥100', 'image': 'assets/apple.jpg'},
-    {'name': '旗舰手机', 'price': '¥789', 'image': 'assets/phone.jpg'},
-    {'name': '苹果', 'price': '¥100', 'image': 'assets/apple.jpg'},
+    {'name': '家电1', 'price': '¥89', 'image': 'main3/jiadian1.jpg'},
+    {'name': '家电2', 'price': '¥89', 'image': 'main3/jiadian2.jpg'},
+    {'name': '家电3', 'price': '¥89', 'image': 'main3/jiadian3.jpg'},
+    {'name': '家电4', 'price': '¥89', 'image': 'main3/jiadian4.jpg'},
+    {'name': '家电5', 'price': '¥89', 'image': 'main3/jiadian5.jpg'},
+    {'name': '家电6', 'price': '¥89', 'image': 'main3/jiadian6.jpg'},
+    {'name': '家电7', 'price': '¥89', 'image': 'main3/jiadian7.jpg'},
+    {'name': '家电8', 'price': '¥89', 'image': 'main3/jiadian8.jpg'},
+    {'name': '家电9', 'price': '¥89', 'image': 'main3/jiadian9.jpg'},
+    {'name': '家电10', 'price': '¥89', 'image': 'main3/jiadian10.png'},
+    {'name': '家电11', 'price': '¥89', 'image': 'main3/jiadian11.jpg'},
+    {'name': '家电12', 'price': '¥89', 'image': 'main3/jiadian12.jpg'},
+    {'name': '家电13', 'price': '¥89', 'image': 'main3/jiadian13.jpg'},
+    {'name': '家电14', 'price': '¥89', 'image': 'main3/jiadian14.jpg'},
+    {'name': '家电15', 'price': '¥89', 'image': 'main3/jiadian15.jpg'},
   ];
 
   List<Map<String, String>> _displayedProducts = [];
