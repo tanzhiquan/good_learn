@@ -122,14 +122,13 @@ class InkProduct extends StatefulWidget {
 }
 
 class _InkProductPageState extends State<InkProduct> {
- 
   final List<Map<String, String>> catalogItems = [
     {'name': '手机1', 'price': '3456元', 'image': 'main6/phone1.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机2', 'price': '5678元', 'image': 'main6/phone2.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机3', 'price': '8910元', 'image': 'main6/phone3.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机4', 'price': '4321元', 'image': 'main6/phone4.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机5', 'price': '6789元', 'image': 'main6/phone5.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
-    {'name': '手机6', 'price': '7654元', 'image': 'main6/phone6.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
+    {'name': '手机6', 'price': '7654元', 'image': 'main6/phone6.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机7', 'price': '9876元', 'image': 'main6/phone7.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机8', 'price': '5432元', 'image': 'main6/phone8.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
     {'name': '手机9', 'price': '8765元', 'image': 'main6/phone9.jpg','detail':'iPhone手机以其精致的设计、强大的性能和直观的用户界面而闻名。它搭载了先进的A系列芯片，确保了流畅的操作体验和高效的多任务处理能力。高清视网膜显示屏提供出色的视觉体验，而其摄像头系统则以其卓越的成像质量和多功能摄影模式受到用户喜爱。iPhone还提供了安全的Face ID面部识别技术，以及持续的系统更新和丰富的应用程序生态系统，使其成为日常通讯、娱乐和生产力的强大工具。'},
@@ -140,6 +139,7 @@ class _InkProductPageState extends State<InkProduct> {
   ];
   List<Map<String, String>> availableItems = [];
   final TextEditingController searchBoxController = TextEditingController();
+  final CartManager cartManager = CartManager();
 
   @override
   void initState() {
@@ -181,12 +181,12 @@ class _InkProductPageState extends State<InkProduct> {
           ),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
               ),
               itemCount: availableItems.length,
               itemBuilder: (context, index) {
@@ -195,13 +195,13 @@ class _InkProductPageState extends State<InkProduct> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CartoonProductDetail(item: availableItems[index]),
+                        builder: (context) => CartoonProductDetail(item: availableItems[index], cartManager: cartManager),
                       ),
                     );
                   },
                   child: Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 5,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -229,6 +229,18 @@ class _InkProductPageState extends State<InkProduct> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ShoppingCartPage(cartManager: cartManager),
+            ),
+          );
+        },
+        child: Icon(Icons.shopping_cart),
+        backgroundColor: Colors.orange,
+      ),
     );
   }
 }
@@ -236,7 +248,9 @@ class _InkProductPageState extends State<InkProduct> {
 
 class CartoonProductDetail extends StatefulWidget {
   final Map<String, String> item;
-  CartoonProductDetail({required this.item});
+  final CartManager cartManager;
+
+  CartoonProductDetail({required this.item, required this.cartManager});
 
   @override
   _CartoonProductDetailState createState() => _CartoonProductDetailState();
@@ -262,9 +276,7 @@ class _CartoonProductDetailState extends State<CartoonProductDetail> {
               children: [
                 Text(widget.item['name']!, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 Text(widget.item['price']!, style: TextStyle(color: Colors.redAccent, fontSize: 20)),
-                // 商品详情，灰色，小号字体
                 Text(widget.item['detail']!, style: TextStyle(color: Colors.grey, fontSize: 12)),
-                // 下面的内容固定在屏幕底部
                 const Divider(),
                 _buildActionButtons(),
               ],
@@ -277,7 +289,6 @@ class _CartoonProductDetailState extends State<CartoonProductDetail> {
 
   Widget _buildActionButtons() {
     return Row(
-      // 下面两个按钮，布局固定到屏幕到最底部
       children: [
         Expanded(child: ElevatedButton(onPressed: () => _showSpecificationSheet(context), child: Text('加入购物车'))),
         SizedBox(width: 8),
@@ -374,11 +385,138 @@ class _CartoonProductDetailState extends State<CartoonProductDetail> {
 
   void _confirmAddToCart() {
     Navigator.pop(context);
+    widget.cartManager.addItem({
+      'name': widget.item['name'],
+      'price': widget.item['price'],
+      'image': widget.item['image'],
+      'size': chosenSize,
+      'color': chosenColor,
+    });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加入购物车成功')));
   }
 
   void _confirmBuyNow() {
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('立即购买成功')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('��即购买成功')));
+  }
+}
+
+class CartManager extends ChangeNotifier {
+  List<Map<String, dynamic>> _items = [];
+
+  List<Map<String, dynamic>> get items => _items;
+
+  double get totalAmount {
+    return _items.fold(0, (sum, item) => sum + double.parse(item['price'].toString().replaceAll(RegExp(r'[^0-9.]'), '')));
+  }
+
+  void addItem(Map<String, dynamic> item) {
+    _items.add(item);
+    notifyListeners();
+  }
+
+  void removeItem(int index) {
+    _items.removeAt(index);
+    notifyListeners();
+  }
+
+  void clear() {
+    _items.clear();
+    notifyListeners();
+  }
+}
+
+class ShoppingCartPage extends StatelessWidget {
+  final CartManager cartManager;
+
+  ShoppingCartPage({required this.cartManager});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('购物车'),
+        backgroundColor: Colors.orange,
+      ),
+      body: ListenableBuilder(
+        listenable: cartManager,
+        builder: (context, child) {
+          if (cartManager.items.isEmpty) {
+            return Center(
+              child: Text('购物车是空的', style: TextStyle(fontSize: 16)),
+            );
+          }
+          
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cartManager.items.length,
+                  itemBuilder: (context, index) {
+                    final item = cartManager.items[index];
+                    return Card(
+                      margin: EdgeInsets.all(8),
+                      child: ListTile(
+                        leading: Image.asset(item['image'], width: 60, height: 60, fit: BoxFit.cover),
+                        title: Text(item['name']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('规格: ${item['size']}'),
+                            Text('运营商: ${item['color']}'),
+                            Text('价格: ${item['price']}', style: TextStyle(color: Colors.redAccent)),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => cartManager.removeItem(index),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '总计: ¥${cartManager.totalAmount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('结算成功')),
+                        );
+                        cartManager.clear();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                      ),
+                      child: Text('结算'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
