@@ -166,6 +166,7 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
 
   List<Map<String, String>> currentDisplayProducts = [];
   final TextEditingController searchFieldController = TextEditingController();
+  final CartManager cartManager = CartManager();
 
   @override
   void initState() {
@@ -187,6 +188,47 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
       appBar: AppBar(
         title: const Text('商品列表'),
         backgroundColor: Colors.blueAccent,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ShoppingCartPage(cartManager: cartManager),
+                    ),
+                  );
+                },
+              ),
+              if (cartManager.itemCount > 0)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 16,
+                      minHeight: 16,
+                    ),
+                    child: Text(
+                      '${cartManager.itemCount}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -218,7 +260,7 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CardStyleProductDetail(item: currentDisplayProducts[index]),
+                        builder: (context) => CardStyleProductDetail(item: currentDisplayProducts[index], cartManager: cartManager),
                       ),
                     );
                   },
@@ -263,7 +305,12 @@ class _CardStyleProductListState extends State<ClassicalProductList> {
 
 class CardStyleProductDetail extends StatefulWidget {
   final Map<String, String> item;
-  CardStyleProductDetail({required this.item});
+  final CartManager cartManager;
+
+  CardStyleProductDetail({
+    required this.item,
+    required this.cartManager,
+  });
 
   @override
   _CardStyleProductDetailState createState() => _CardStyleProductDetailState();
@@ -271,9 +318,114 @@ class CardStyleProductDetail extends StatefulWidget {
 
 class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
   String? selectedSize;
-  String? selectedColor;
-  final List<String> sizes = ['大份', '中份', '小份'];
-  // 重写build方法以构建UI界面
+  final List<String> sizes = ['S', 'M', 'L', 'XL']; // 尺寸选项
+
+  void _addToCart(BuildContext context) {
+    if (selectedSize != null) {
+      // 创建购物车商品项
+      CartItem newItem = CartItem(
+        name: widget.item['productName']!,
+        price: widget.item['priceTag']!,
+        image: widget.item['image']!,
+        size: selectedSize!,
+      );
+      
+      // 添加到购物车
+      widget.cartManager.addItem(newItem);
+      
+      // 关闭底部弹窗
+      Navigator.pop(context);
+      
+      // 显示提示
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('已添加到购物车')),
+      );
+      
+      // 跳转到购物车页面
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ShoppingCartPage(cartManager: widget.cartManager),
+        ),
+      );
+    } else {
+      // 如果没有选择尺寸，显示提示
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('请选择尺寸')),
+      );
+    }
+  }
+
+  // 显示底部弹出菜单
+  void _showOptionsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('选择尺寸', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 16),
+                  Wrap(
+                    spacing: 8,
+                    children: sizes.map((size) {
+                      return ChoiceChip(
+                        label: Text(size),
+                        selected: selectedSize == size,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            selectedSize = selected ? size : null;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: selectedSize != null 
+                              ? () => _addToCart(context)
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                          ),
+                          child: Text('加入购物车'),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: selectedSize != null 
+                              ? () {
+                                  _addToCart(context);
+                                  // 可以直接跳转到结算页面
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.redAccent,
+                          ),
+                          child: Text('立即购买'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // 返回一个Scaffold作为主布局结构
@@ -336,88 +488,183 @@ class _CardStyleProductDetailState extends State<CardStyleProductDetail> {
       ),
     );
   }
+}
 
-  // 显示底部弹出菜单，用于选择产品规格
-  void _showOptionsBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 显示“选择规格”标题，使用较大的字体和粗体
-                  Text('选择规格', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  // 显示“尺寸”标题，使用较大的字体
-                  Text('尺寸', style: TextStyle(fontSize: 16)),
-                  // 显示可选择的尺寸芯片
-                  Wrap(
-                    spacing: 8,
-                    children: sizes.map((size) {
-                      return ChoiceChip(
-                        label: Text(size),
-                        selectedColor: Colors.blueAccent,
-                        selected: selectedSize == size,
-                        onSelected: (bool selected) {
-                          setState(() {
-                            selectedSize = selected ? size : null;
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 16),
-                  // 显示两个按钮：“加入购物车”和“立即购买”，根据选择的规格启用或禁用
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: (selectedSize != null && selectedColor != null)
-                              ? () => _addToCart(context)
-                              : null,
-                          child: Text('加入购物车'),
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[800]),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: (selectedSize != null && selectedColor != null)
-                              ? () => _buyNow(context)
-                              : null,
-                          child: Text('立即购买'),
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+// 购物车商品模型
+class CartItem {
+  final String name;
+  final String price;
+  final String image;
+  final String size;
+  int quantity;
+
+  CartItem({
+    required this.name,
+    required this.price,
+    required this.image,
+    required this.size,
+    this.quantity = 1,
+  });
+}
+
+// 购物车管理类
+class CartManager extends ChangeNotifier {
+  List<CartItem> _items = [];
+  
+  List<CartItem> get items => _items;
+  
+  int get itemCount => _items.length;
+  
+  double get totalAmount {
+    return _items.fold(0, (sum, item) {
+      double price = double.parse(item.price.replaceAll('元', ''));
+      return sum + (price * item.quantity);
+    });
+  }
+  
+  void addItem(CartItem item) {
+    // 检查是否已存在相同商品和规格
+    int existingIndex = _items.indexWhere(
+      (i) => i.name == item.name && i.size == item.size
+    );
+    
+    if (existingIndex != -1) {
+      _items[existingIndex].quantity += 1;
+    } else {
+      _items.add(item);
+    }
+    notifyListeners();
+  }
+  
+  void removeItem(int index) {
+    _items.removeAt(index);
+    notifyListeners();
+  }
+  
+  void updateQuantity(int index, int quantity) {
+    if (quantity > 0) {
+      _items[index].quantity = quantity;
+      notifyListeners();
+    }
+  }
+  
+  void clear() {
+    _items.clear();
+    notifyListeners();
+  }
+}
+
+class ShoppingCartPage extends StatelessWidget {
+  final CartManager cartManager;
+
+  ShoppingCartPage({required this.cartManager});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('购物车'),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: ListenableBuilder(
+        listenable: cartManager,
+        builder: (context, child) {
+          if (cartManager.items.isEmpty) {
+            return Center(
+              child: Text('购物车是空的', style: TextStyle(fontSize: 16)),
             );
-          },
-        );
-      },
-    );
-  }
-
-
-  void _addToCart(BuildContext context) {
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('已将 ${widget.item['productName']} ($selectedSize, $selectedColor) 加入购物车')),
-    );
-  }
-
-  void _buyNow(BuildContext context) {
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('立即购买 ${widget.item['productName']} ($selectedSize, $selectedColor)')),
+          }
+          
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cartManager.items.length,
+                  itemBuilder: (context, index) {
+                    final item = cartManager.items[index];
+                    return Card(
+                      margin: EdgeInsets.all(8),
+                      child: ListTile(
+                        leading: Image.asset(item.image, width: 60, height: 60, fit: BoxFit.cover),
+                        title: Text(item.name),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('规格: ${item.size}'),
+                            Text('价格: ${item.price}', style: TextStyle(color: Colors.redAccent)),
+                          ],
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: () {
+                                if (item.quantity > 1) {
+                                  cartManager.updateQuantity(index, item.quantity - 1);
+                                }
+                              },
+                            ),
+                            Text('${item.quantity}'),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                cartManager.updateQuantity(index, item.quantity + 1);
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete, color: Colors.red),
+                              onPressed: () => cartManager.removeItem(index),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '总计: ¥${cartManager.totalAmount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // 结算逻辑
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('结算成功')),
+                        );
+                        cartManager.clear();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                      ),
+                      child: Text('结算'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
