@@ -12,6 +12,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// 购物车数据模型
+class CartItem {
+  final String name;
+  final String price;
+  final String image;
+  final String color;
+  int quantity;
+
+  CartItem({
+    required this.name,
+    required this.price, 
+    required this.image,
+    required this.color,
+    this.quantity = 1
+  });
+}
+
+// 购物车状态管理
+class CartProvider extends ChangeNotifier {
+  List<CartItem> _items = [];
+  
+  List<CartItem> get items => _items;
+  
+  double get totalPrice {
+    return _items.fold(0, (sum, item) => 
+      sum + double.parse(item.price.substring(1)) * item.quantity
+    );
+  }
+
+  void addItem(CartItem item) {
+    _items.add(item);
+    notifyListeners();
+  }
+
+  void removeItem(int index) {
+    _items.removeAt(index);
+    notifyListeners(); 
+  }
+
+  void updateQuantity(int index, int quantity) {
+    _items[index].quantity = quantity;
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items.clear();
+    notifyListeners();
+  }
+}
 
 class DengLu extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
@@ -181,16 +230,104 @@ class ZhuCe extends StatelessWidget {
   }
 }
 
-// 产品列表页面，继承自StatefulWidget
+// 购物车页面
+class CartPage extends StatefulWidget {
+  final CartProvider cartProvider;
+
+  CartPage({required this.cartProvider});
+
+  @override
+  _CartPageState createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('购物车'),
+      ),
+      body: widget.cartProvider.items.isEmpty 
+        ? Center(
+            child: Text('购物车是空的'),
+          )
+        : Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: widget.cartProvider.items.length,
+                  itemBuilder: (context, index) {
+                    final item = widget.cartProvider.items[index];
+                    return ListTile(
+                      leading: Image.asset(item.image),
+                      title: Text(item.name),
+                      subtitle: Text('${item.color} - ${item.price}'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () {
+                              if(item.quantity > 1) {
+                                widget.cartProvider.updateQuantity(index, item.quantity - 1);
+                              }
+                            },
+                          ),
+                          Text('${item.quantity}'),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              widget.cartProvider.updateQuantity(index, item.quantity + 1);
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              widget.cartProvider.removeItem(index);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '总计: ¥${widget.cartProvider.totalPrice.toStringAsFixed(2)}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // 结算功能
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('正在前往支付...')),
+                        );
+                      },
+                      child: Text('去结算'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+}
+
+// 产品列表页面
 class ProductListPage extends StatefulWidget {
   @override
-  // 创建与此StatefulWidget关联的状态对象
   ProductList createState() => ProductList();
 }
 
-  // 产品列表State
 class ProductList extends State<ProductListPage> {
-  // 保存所有的产品信息
+  final CartProvider cartProvider = CartProvider();
+  
   final List<Map<String, String>> _allProducts = [
     {'name': '家电1', 'price': '¥89', 'image': 'main3/jiadian1.jpg'},
     {'name': '家电2', 'price': '¥89', 'image': 'main3/jiadian2.jpg'},
@@ -209,22 +346,17 @@ class ProductList extends State<ProductListPage> {
     {'name': '家电15', 'price': '¥89', 'image': 'main3/jiadian15.jpg'},
   ];
 
-  // 保存当前显示的产品信息
   List<Map<String, String>> _displayedProducts = [];
-  // 保存搜索框的内容
   TextEditingController _searchController = TextEditingController();
 
   @override
-  // 在State对象被插入到树中时调用
   void initState() {
     super.initState();
     _displayedProducts = List.from(_allProducts);
   }
 
-  // 搜索框的回调函数
   void _searchProducts(String query) {
     setState(() {
-      // 通过搜索框的内容来过滤产品
       _displayedProducts = _allProducts
           .where((product) =>
           product['name']!.toLowerCase().contains(query.toLowerCase()))
@@ -237,6 +369,19 @@ class ProductList extends State<ProductListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('商品陈列'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(cartProvider: cartProvider),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -258,7 +403,6 @@ class ProductList extends State<ProductListPage> {
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(10),
-              //  products的布局
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.7,
@@ -266,17 +410,16 @@ class ProductList extends State<ProductListPage> {
                 mainAxisSpacing: 10,
               ),
               itemCount: _displayedProducts.length,
-              //  products的item builder
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    //  点击某个product时，跳转到对应的详情页面
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetailPage(
-                                product: _displayedProducts[index]),
+                        builder: (context) => ProductDetailPage(
+                          product: _displayedProducts[index],
+                          cartProvider: cartProvider,
+                        ),
                       ),
                     );
                   },
@@ -288,9 +431,7 @@ class ProductList extends State<ProductListPage> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      //  product的名称
                       Text(_displayedProducts[index]['name']!),
-                      //  product的价格
                       Text(_displayedProducts[index]['price']!,
                           style: const TextStyle(color: Colors.red)),
                     ],
@@ -301,16 +442,28 @@ class ProductList extends State<ProductListPage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CartPage(cartProvider: cartProvider),
+            ),
+          );
+        },
+        child: Icon(Icons.shopping_cart),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
 
-
-// 
+// 商品详情页
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
+  final CartProvider cartProvider;
 
-  ProductDetailPage({required this.product});
+  ProductDetailPage({required this.product, required this.cartProvider});
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -325,7 +478,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.product['name']!)),
+      appBar: AppBar(
+        title: Text(widget.product['name']!),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(cartProvider: widget.cartProvider),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,8 +517,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Text(
-                      '这是一个高品质的${widget
-                          .product['name']}，这款家电集高效、节能与智能于一体，操作简便，性能卓越，为现代家庭带来便捷与舒适。设计时尚，耐用性强，是提升生活品质的理想选择。'
+                      '这是一个高品质的${widget.product['name']}，这款家电集高效、节能与智能于一体，操作简便，性能卓越，为现代家庭带来便捷与舒适。设计时尚，耐用性强，是提升生活品质的理想选择。'
                   ),
                   SizedBox(height: 16),
                   ElevatedButton(
@@ -398,13 +565,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         .toList(),
                   ),
                   SizedBox(height: 16),
-                  SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: (selectedColor != null && selectedSize != null)
+                    onPressed: selectedColor != null
                         ? () {
-                      Navigator.pop(context);
-                      _addToCart(context);
-                    }
+                            widget.cartProvider.addItem(
+                              CartItem(
+                                name: widget.product['name']!,
+                                price: widget.product['price']!,
+                                image: widget.product['image']!,
+                                color: selectedColor!,
+                              ),
+                            );
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('已添加到购物车')),
+                            );
+                          }
                         : null,
                     child: Text('加入购物车'),
                   ),
@@ -414,17 +590,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           },
         );
       },
-    );
-  }
-
-  void _addToCart(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-            '已将 ${widget
-                .product['name']} ($selectedColor, $selectedSize) 加入购物车'),
-        duration: Duration(seconds: 2),
-      ),
     );
   }
 }
