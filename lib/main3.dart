@@ -12,52 +12,52 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 购物车数据模型
-class CartItem {
-  final String name;
-  final String price;
-  final String image;
-  final String color;
-  int quantity;
+// 购物车商品模型重命名和重构
+class ShoppingCartProduct {
+  final String productName;
+  final String productPrice;
+  final String productImage; 
+  final String productColor;
+  int productCount;
 
-  CartItem({
-    required this.name,
-    required this.price, 
-    required this.image,
-    required this.color,
-    this.quantity = 1
+  ShoppingCartProduct({
+    required this.productName,
+    required this.productPrice,
+    required this.productImage,
+    required this.productColor, 
+    this.productCount = 1
   });
 }
 
-// 购物车状态管理
-class CartProvider extends ChangeNotifier {
-  List<CartItem> _items = [];
+// 购物车管理类重构
+class ShoppingCartManager extends ChangeNotifier {
+  List<ShoppingCartProduct> _productList = [];
   
-  List<CartItem> get items => _items;
+  List<ShoppingCartProduct> get productList => _productList;
   
-  double get totalPrice {
-    return _items.fold(0, (sum, item) => 
-      sum + double.parse(item.price.substring(1)) * item.quantity
+  double get totalAmount {
+    return _productList.fold(0, (sum, product) => 
+      sum + double.parse(product.productPrice.substring(1)) * product.productCount
     );
   }
 
-  void addItem(CartItem item) {
-    _items.add(item);
+  void addToCart(ShoppingCartProduct product) {
+    _productList.add(product);
     notifyListeners();
   }
 
-  void removeItem(int index) {
-    _items.removeAt(index);
+  void removeFromCart(int index) {
+    _productList.removeAt(index);
+    notifyListeners();
+  }
+
+  void updateProductCount(int index, int count) {
+    _productList[index].productCount = count;
     notifyListeners(); 
   }
 
-  void updateQuantity(int index, int quantity) {
-    _items[index].quantity = quantity;
-    notifyListeners();
-  }
-
-  void clearCart() {
-    _items.clear();
+  void clearShoppingCart() {
+    _productList.clear();
     notifyListeners();
   }
 }
@@ -230,24 +230,24 @@ class ZhuCe extends StatelessWidget {
   }
 }
 
-// 购物车页面
-class CartPage extends StatefulWidget {
-  final CartProvider cartProvider;
+// 购物车页面重构
+class ShoppingCartPage extends StatefulWidget {
+  final ShoppingCartManager cartManager;
 
-  CartPage({required this.cartProvider});
+  ShoppingCartPage({required this.cartManager});
 
   @override
-  _CartPageState createState() => _CartPageState();
+  _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('购物车'),
       ),
-      body: widget.cartProvider.items.isEmpty 
+      body: widget.cartManager.productList.isEmpty 
         ? Center(
             child: Text('购物车是空的'),
           )
@@ -255,35 +255,41 @@ class _CartPageState extends State<CartPage> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: widget.cartProvider.items.length,
+                  itemCount: widget.cartManager.productList.length,
                   itemBuilder: (context, index) {
-                    final item = widget.cartProvider.items[index];
+                    final product = widget.cartManager.productList[index];
                     return ListTile(
-                      leading: Image.asset(item.image),
-                      title: Text(item.name),
-                      subtitle: Text('${item.color} - ${item.price}'),
+                      leading: Image.asset(product.productImage),
+                      title: Text(product.productName),
+                      subtitle: Text('${product.productColor} - ${product.productPrice}'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             icon: Icon(Icons.remove),
                             onPressed: () {
-                              if(item.quantity > 1) {
-                                widget.cartProvider.updateQuantity(index, item.quantity - 1);
+                              if(product.productCount > 1) {
+                                widget.cartManager.updateProductCount(
+                                  index, 
+                                  product.productCount - 1
+                                );
                               }
                             },
                           ),
-                          Text('${item.quantity}'),
+                          Text('${product.productCount}'),
                           IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () {
-                              widget.cartProvider.updateQuantity(index, item.quantity + 1);
+                              widget.cartManager.updateProductCount(
+                                index,
+                                product.productCount + 1
+                              );
                             },
                           ),
                           IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              widget.cartProvider.removeItem(index);
+                              widget.cartManager.removeFromCart(index);
                             },
                           ),
                         ],
@@ -298,12 +304,11 @@ class _CartPageState extends State<CartPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '总计: ¥${widget.cartProvider.totalPrice.toStringAsFixed(2)}',
+                      '总计: ¥${widget.cartManager.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // 结算功能
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('正在前往支付...')),
                         );
@@ -326,7 +331,7 @@ class ProductListPage extends StatefulWidget {
 }
 
 class ProductList extends State<ProductListPage> {
-  final CartProvider cartProvider = CartProvider();
+  final ShoppingCartManager cartManager = ShoppingCartManager();
   
   final List<Map<String, String>> _allProducts = [
     {'name': '家电1', 'price': '¥89', 'image': 'main3/jiadian1.jpg'},
@@ -369,19 +374,6 @@ class ProductList extends State<ProductListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('商品陈列'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartPage(cartProvider: cartProvider),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -418,7 +410,7 @@ class ProductList extends State<ProductListPage> {
                       MaterialPageRoute(
                         builder: (context) => ProductDetailPage(
                           product: _displayedProducts[index],
-                          cartProvider: cartProvider,
+                          cartManager: cartManager,
                         ),
                       ),
                     );
@@ -447,7 +439,7 @@ class ProductList extends State<ProductListPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CartPage(cartProvider: cartProvider),
+              builder: (context) => ShoppingCartPage(cartManager: cartManager),
             ),
           );
         },
@@ -461,9 +453,9 @@ class ProductList extends State<ProductListPage> {
 // 商品详情页
 class ProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
-  final CartProvider cartProvider;
+  final ShoppingCartManager cartManager;
 
-  ProductDetailPage({required this.product, required this.cartProvider});
+  ProductDetailPage({required this.product, required this.cartManager});
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -480,19 +472,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product['name']!),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartPage(cartProvider: widget.cartProvider),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -530,6 +509,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ShoppingCartPage(cartManager: widget.cartManager),
+            ),
+          );
+        },
+        child: Icon(Icons.shopping_cart),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 
@@ -565,24 +556,59 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         .toList(),
                   ),
                   SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: selectedColor != null
-                        ? () {
-                            widget.cartProvider.addItem(
-                              CartItem(
-                                name: widget.product['name']!,
-                                price: widget.product['price']!,
-                                image: widget.product['image']!,
-                                color: selectedColor!,
-                              ),
-                            );
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('已添加到购物车')),
-                            );
-                          }
-                        : null,
-                    child: Text('加入购物车'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: selectedColor != null
+                              ? () {
+                                  widget.cartManager.addToCart(
+                                    ShoppingCartProduct(
+                                      productName: widget.product['name']!,
+                                      productPrice: widget.product['price']!,
+                                      productImage: widget.product['image']!,
+                                      productColor: selectedColor!,
+                                    ),
+                                  );
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ShoppingCartPage(cartManager: widget.cartManager),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: Text('加入购物车'),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: selectedColor != null
+                              ? () {
+                                  widget.cartManager.addToCart(
+                                    ShoppingCartProduct(
+                                      productName: widget.product['name']!,
+                                      productPrice: widget.product['price']!,
+                                      productImage: widget.product['image']!,
+                                      productColor: selectedColor!,
+                                    ),
+                                  );
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('正在前往支付...')),
+                                  );
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: Text('立即购买'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
